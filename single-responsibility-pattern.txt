@@ -1,0 +1,40 @@
+Single Responsibility Principle (SRP): This principle states that a class should have only one reason to change.
+In other words, a class should have only one responsibility or task to perform.
+This principle helps to reduce code complexity, increase code readability, and make it easier to maintain the code over time.
+
+here's an example of the Single Responsibility Principle (SRP) in action:
+
+Suppose we have a class `Employee` that is responsible for storing employee data and calculating their salary.
+However, as the program grows, the `Employee` class becomes more complex and difficult to maintain. To apply the SRP, we can separate the class into two separate classes: `Employee` and `SalaryCalculator`.
+
+The `Employee` class is now responsible for storing employee data only, such as their name, address, and job title.
+The `SalaryCalculator` class is now responsible for calculating the salary of an employee, based on their job title, experience, and other factors.
+
+By separating the concerns of these classes, we have made the code simpler and easier to understand.
+We have also made it easier to maintain and modify the code over time, as any changes made to the `Employee` class will not affect the `SalaryCalculator` class, and vice versa.
+
+Here's an example of what the refactored code might look like:
+
+```
+public class Employee {
+    private String name;
+    private String address;
+    private String jobTitle;
+
+    // Constructor and getter/setter methods
+
+    // Other methods related to employee data
+}
+
+public class SalaryCalculator {
+    public double calculateSalary(Employee employee) {
+        // Calculate salary based on job title, experience, and other factors
+    }
+
+    // Other methods related to salary calculation
+}
+```
+
+In this example, the `Employee` class is now responsible for storing employee data, 
+and the `SalaryCalculator` class is responsible for calculating the salary of an employee.
+This separation of concerns makes the code simpler, easier to understand, and easier to maintain over time.
