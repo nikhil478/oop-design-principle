@@ -1,0 +1,56 @@
+The DRY (Don't Repeat Yourself) principle is a software development principle that encourages developers to avoid duplicating code or logic in multiple places.
+By doing so, developers can reduce code complexity,improve code readability, and make it easier to maintain the code over time.
+
+here's an example of how the DRY principle can be applied in Java:
+
+Suppose we have a Java program that needs to calculate the area of different shapes, such as circles and rectangles. One way to implement this would be to write separate functions for calculating the area of each shape:
+
+```java
+public double calculateCircleArea(double radius) {
+    return Math.PI * Math.pow(radius, 2);
+}
+
+public double calculateRectangleArea(double length, double width) {
+    return length * width;
+}
+```
+
+While this approach works, it violates the DRY principle because the calculation of the area formula is repeated in multiple places. A better approach would be to create a more generic `Shape` class with an `area()` method that can be overridden by specific shape subclasses:
+
+```java
+public abstract class Shape {
+    public abstract double area();
+}
+
+public class Circle extends Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double area() {
+        return Math.PI * Math.pow(radius, 2);
+    }
+}
+
+public class Rectangle extends Shape {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public double area() {
+        return length * width;
+    }
+}
+```
+
+By using inheritance and polymorphism, we have created a more generic and reusable `Shape` class that can be extended to support new shapes. This approach also allows us to keep the area calculation logic in a single place, making the code easier to maintain and modify.
+
+In summary, the DRY principle encourages developers to avoid duplicating code or logic in multiple places. In Java, this can be achieved by using inheritance, polymorphism, and abstraction to create reusable classes and methods. By doing so, developers can create more maintainable and scalable code, while also reducing the risk of errors and bugs.
