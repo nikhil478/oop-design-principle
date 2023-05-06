@@ -1,0 +1,40 @@
+The OCP states that software entities should be open for extension but closed for modification.
+This means that adding new functionality to a class should not require modifying the existing code.
+Instead, new functionality should be added through inheritance, composition, or other means.
+For example,
+if you need to add new functionality to a class,
+you should create a new class that extends the original class,rather than modifying the original class directly.
+
+here's an example of the Open-Closed Principle in action:
+
+Let's say we have a class called Car with a method called drive(). Initially, the drive() method only allows the car to move forward:
+
+class Car {
+  drive() {
+    console.log('The car is moving forward.');
+  }
+}
+
+
+Now, suppose we want to add a new feature that allows the car to move backward as well.
+Instead of modifying the existing drive() method, we can extend the Car class and add a new driveBackward() method:
+
+class Car {
+  drive() {
+    console.log('The car is moving forward.');
+  }
+}
+
+class BackwardCar extends Car {
+  driveBackward() {
+    console.log('The car is moving backward.');
+  }
+}
+
+
+This way, we are extending the functionality of the Car class without modifying its existing code.
+The BackwardCar class can be used anywhere the Car class is expected, and it adds a new feature without affecting the correctness of the program.
+
+Similarly, we can also add new types of cars that behave differently without changing the existing Car class.
+For example, we could create a HybridCar class that combines electric and gas power, or a SportsCar class that has a higher top speed.
+This way, we can add new features to our code without modifying the existing code, following the Open-Closed Principle.
