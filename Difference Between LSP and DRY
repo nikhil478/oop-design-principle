@@ -1,0 +1,108 @@
+The DRY (Don't Repeat Yourself) principle and the LSP (Liskov Substitution Principle) are both important principles in object-oriented programming,
+but they address different aspects of software design.
+
+The DRY principle aims to reduce duplication in code. It states that every piece of knowledge in a system should have a single, unambiguous representation.
+This means that if we have some functionality that is used in multiple places,
+we should extract that functionality into a single place and reuse it where needed, rather than duplicating the code in multiple places.
+
+For example, imagine that we have a system that calculates the area of different shapes,
+such as circles and rectangles. We might have two separate methods to calculate the area of each shape:
+
+public double calculateCircleArea(double radius) {
+    return Math.PI * radius * radius;
+}
+
+public double calculateRectangleArea(double width, double height) {
+    return width * height;
+}
+
+
+While this code works, it violates the DRY principle because we have duplicated the logic for calculating the area in two separate methods.
+Instead, we can extract the common functionality into a single method, like so:
+
+public double calculateArea(Shape shape) {
+    if (shape instanceof Circle) {
+        Circle circle = (Circle) shape;
+        return Math.PI * circle.getRadius() * circle.getRadius();
+    } else if (shape instanceof Rectangle) {
+        Rectangle rectangle = (Rectangle) shape;
+        return rectangle.getWidth() * rectangle.getHeight();
+    } else {
+        throw new IllegalArgumentException("Unsupported shape type");
+    }
+}
+
+Now, we have a single method that can calculate the area of any shape that implements the Shape interface. This reduces duplication in our code and makes it easier to maintain and update.
+
+On the other hand, the LSP aims to ensure that subclasses can be used in place of their parent classes without causing any unexpected behavior. It states that if a program is using a base class, it should be able to use any of its derived classes without knowing it. In other words, derived classes should not alter the behavior of the base class in unexpected ways.
+
+For example, imagine that we have a Rectangle class and a Square class that inherits from Rectangle.
+A square is a special type of rectangle where all sides are equal.
+However, if we implement the Square class by simply inheriting from Rectangle and overriding the setWidth() and setHeight() methods to always set both sides
+to the same value, we would violate the LSP because a Square object would not behave the same as a Rectangle object.
+
+
+To adhere to the LSP, we should instead define a separate Quadrilateral class that both Rectangle and Square inherit from.
+This ensures that any behavior that is common to both shapes is defined in the Quadrilateral class,
+
+
+public class Quadrilateral {
+    private double width;
+    private double height;
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public double getArea() {
+        return width * height;
+    }
+}
+
+public class Rectangle extends Quadrilateral {
+    // No additional properties or methods needed
+}
+
+public class Square extends Quadrilateral {
+    @Override
+    public void setWidth(double width) {
+        super.setWidth(width);
+        super.setHeight(width);
+    }
+
+    @Override
+    public void setHeight(double height) {
+        super.setHeight(height);
+        super.setWidth(height);
+   
+
+and any behavior that is specific to a particular shape is defined in its own class.
+With this implementation, both `Rectangle` and `Square` objects can be used interchangeably as `Quadrilateral` objects,
+without any unexpected behavior. For example:
+
+```
+Quadrilateral quad1 = new Rectangle();
+quad1.setWidth(5);
+quad1.setHeight(10);
+System.out.println(quad1.getArea()); // Output: 50.0
+
+Quadrilateral quad2 = new Square();
+quad2.setWidth(5);
+System.out.println(quad2.getArea()); // Output: 25.0
+```
+
+In summary, while the DRY principle aims to reduce duplication in code,
+the LSP aims to ensure that objects can be used interchangeably without causing unexpected behavior. Both principles are important in software design,
+and following them can lead to more maintainable, flexible, and robust software systems.
