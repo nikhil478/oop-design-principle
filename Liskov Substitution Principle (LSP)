@@ -1,0 +1,64 @@
+The Liskov Substitution Principle (LSP) is an important object-oriented design principle that emphasizes the need for inheritance hierarchies
+to follow a certain set of rules. Specifically, the LSP states that "if S is a subtype of T,
+then objects of type T may be replaced with objects of type S (i.e., objects of type S may be substituted for objects of type T) without affecting
+the correctness of the program".
+
+In other words, the LSP requires that a subclass should behave like its superclass,
+so that the code that uses the superclass can also work with objects of the subclass without knowing the difference.
+
+To illustrate the impact of the LSP, let's consider another example.
+Suppose we have a Bird class with a fly() method that allows the bird to fly, and a Penguin class that extends the Bird class.
+However, penguins cannot fly, so the fly() method in the Penguin class is empty.
+
+Now, suppose we have a function that takes a Bird object and calls its fly() method.
+According to the LSP, any instance of the Penguin class should be able to be substituted for a Bird object without affecting the correctness of the program.
+
+However, if the function calls the fly() method on a Penguin object, the object will not fly, and we have violated the LSP.
+
+Here's an example of how this might look:
+
+public class Bird {
+    public void fly() {
+        // Code to fly
+    }
+}
+
+public class Penguin extends Bird {
+    @Override
+    public void fly() {
+        // Penguins cannot fly, so do nothing
+    }
+}
+
+public class BirdWatcher {
+    public void watchBird(Bird bird) {
+        bird.fly();
+    }
+}
+
+
+In this example, we have violated the LSP by allowing a Penguin object to be substituted for a Bird object, even though penguins cannot fly.
+To fix this, we can modify the Bird and Penguin classes to better adhere to the LSP, as shown below
+
+
+public abstract class Bird {
+    public abstract void fly();
+}
+
+public class Penguin extends Bird {
+    @Override
+    public void fly() {
+        throw new UnsupportedOperationException("Penguins cannot fly");
+    }
+}
+
+public class BirdWatcher {
+    public void watchBird(Bird bird) {
+        bird.fly();
+    }
+}
+
+In this modified example, we have made the Bird class abstract, and made its fly() method abstract as well.
+This ensures that any subclass of Bird will have to implement the fly() method, which is required for the class to behave like a Bird.
+We have also modified the Penguin class to throw an exception when its fly() method is called, which makes it clear that penguins cannot fly.
+By doing this, we have upheld the Liskov Substitution Principle and ensured that the program behaves correctly.
